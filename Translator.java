@@ -64,7 +64,7 @@ public class Translator{
             if(this.bst.contains(asociacion)){
                 traduccion += this.bst.get(asociacion).getEspanol() + " ";
             }else{
-                traduccion += palabras[i] + " ";
+                traduccion += "*" + palabras[i] + "* ";
             }
         }
         return traduccion;
