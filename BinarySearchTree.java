@@ -66,7 +66,7 @@ public class BinarySearchTree<E extends Comparable<E>> implements OrderedStructu
      * @return true si value se encuentra en el BST
      */
     public boolean contains(BinarySearchTree<E> node, E value){
-        if (node.getValue() == value) {
+        if (node.getValue().compareTo(value)==0) {
             return true;
         }
         boolean contains = false;
@@ -84,15 +84,19 @@ public class BinarySearchTree<E extends Comparable<E>> implements OrderedStructu
      * @param value valor a buscar dentro del BST
      * @return valor del BST
      */
-    public E get(E value, BinarySearchTree<E> node){
-        if(node != null) {
-            inOrder(node.getLeft());
-               if(node.getValue().compareTo(value)==0){
-                   return node.getValue();
-               }
-            inOrder(node.getRight());
+    public E get(BinarySearchTree<E> node, E value){
+        if (node.getValue().compareTo(value)==0) {
+            return node.getValue();
         }
-        return null;
+        E contains = null;
+        if (node.getLeft() != null) {
+            contains = get(node.getLeft(), value);
+        }
+        if (contains == null && node.getRight() != null) {
+            contains = get(node.getRight(), value);
+        }
+    
+        return contains;
     }
 
     /**
