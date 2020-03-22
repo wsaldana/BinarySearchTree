@@ -182,10 +182,13 @@ public class BinarySearchTree<E extends Comparable<E>> implements OrderedStructu
     }
 
     public void inOrder(BinarySearchTree<E> node) {
-        if(node != null) {
+        if (node.getLeft() != null) {
             inOrder(node.getLeft());
-            System.out.println(node.getValue().toString() + " ");   
-            inOrder(node.getRight());
+        }else{
+            System.out.println(node.getValue().toString());
+            if (node.getRight() != null) {
+                inOrder(node.getRight());
+            }
         }
     }
     
