@@ -23,6 +23,7 @@ public class Main{
         String oracion = sc.nextLine();
 
         Translator traductor = new Translator(archivo, oracion);
-        traductor.traducir();
+        traductor.agregarDiccionario();
+        System.out.println(traductor.traducir());
     }
 }

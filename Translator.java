@@ -67,7 +67,7 @@ public class Translator{
         String traduccion = "";
         for(int i=0; i<palabras.length; i++){
             Association<String> asociacion = new Association<String>(palabras[i], null);
-            if(this.bst.contains(asociacion, this.bst)){
+            if(this.bst.contains(this.bst,asociacion)){
                 traduccion += this.bst.get(asociacion, this.bst).getEspanol() + " ";
             }else{
                 traduccion += "*" + palabras[i] + "* ";

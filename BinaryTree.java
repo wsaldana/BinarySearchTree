@@ -46,6 +46,10 @@ public class BinaryTree<E> {
         setRight(right);
     }
 
+
+
+
+    
     /**
      * Asigna un objeto hijo a la izquierda
      * @param newLeft
@@ -57,7 +61,7 @@ public class BinaryTree<E> {
         left.setParent(this);
     }
 
-    private boolean isEmpty() {
+    public boolean isEmpty() {
         return this.getValue() == null;
     }
 

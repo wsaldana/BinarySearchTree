@@ -16,7 +16,7 @@ public class BinarySearchTree<E extends Comparable<E>> implements OrderedStructu
     public BinarySearchTree(){
         val = null;
         parent = null; 
-        left = right = this;
+        left = right = null;
     }
 
     /**
@@ -46,19 +46,18 @@ public class BinarySearchTree<E extends Comparable<E>> implements OrderedStructu
      * Agrega elementos de manera ordenada al BST
      * @param value
      */
-    public void add(E newValue, BinarySearchTree<E> tree){   
-        if(tree.getValue().compareTo(newValue) > 0 || tree.getValue().compareTo(newValue) == 0){
-            if(tree.getLeft().isEmpty()){
-                tree.setLeft(new BinarySearchTree<E>(newValue));
-            }else{
-                add(newValue, tree.getLeft());
-            }
-        }else if(tree.getValue().compareTo(newValue) < 0){
-            if(tree.getRight().isEmpty()){
-                tree.setRight(new BinarySearchTree<E>(newValue));
-            }else{
-                add(newValue, tree.getRight());
-            }
+    public void add(E newValue, BinarySearchTree<E> tree){  
+        int comp = tree.getValue().compareTo(newValue);
+        if(comp>0 && tree.getLeft()==null){
+            tree.setLeft(new BinarySearchTree<E>());
+            tree.getLeft().setValue(newValue);
+        }else if(tree.getLeft()!=null){
+            add(newValue, tree.getLeft());
+        }if(comp<0 && tree.getRight()==null){
+            tree.setRight(new BinarySearchTree<E>());
+            tree.getRight().setValue(newValue);
+        }else if(tree.getRight()!=null){
+            add(newValue, tree.getRight());
         }
     }
 
@@ -66,16 +65,34 @@ public class BinarySearchTree<E extends Comparable<E>> implements OrderedStructu
      * @param value
      * @return true si value se encuentra en el BST
      */
-    public boolean contains(E value){
-        return false;
+    public boolean contains(BinarySearchTree<E> node, E value){
+        if (node.getValue() == value) {
+            return true;
+        }
+        boolean contains = false;
+        if (node.getLeft() != null) {
+            contains = contains(node.getLeft(), value);
+        }
+        if (!contains && node.getRight() != null) {
+            contains = contains(node.getRight(), value);
+        }
+    
+        return contains;
     }
 
     /**
      * @param value valor a buscar dentro del BST
      * @return valor del BST
      */
-    public E get(E value){
-        return value;
+    public E get(E value, BinarySearchTree<E> node){
+        if(node != null) {
+            inOrder(node.getLeft());
+               if(node.getValue().compareTo(value)==0){
+                   return node.getValue();
+               }
+            inOrder(node.getRight());
+        }
+        return null;
     }
 
     /**
@@ -161,9 +178,9 @@ public class BinarySearchTree<E extends Comparable<E>> implements OrderedStructu
     }
 
     public void inOrder(BinarySearchTree<E> node) {
-        if(!(node.isEmpty())) {
-            inOrder(node.getLeft());   
-            System.out.print(node.getValue().toString() + " ");
+        if(node != null) {
+            inOrder(node.getLeft());
+            System.out.println(node.getValue().toString() + " ");   
             inOrder(node.getRight());
         }
     }
