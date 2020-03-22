@@ -46,18 +46,18 @@ public class BinarySearchTree<E extends Comparable<E>> implements OrderedStructu
      * Agrega elementos de manera ordenada al BST
      * @param value
      */
-    public void add(E newValue){
-        if(this.getValue().compareTo(newValue) < 0 || this.getValue().compareTo(newValue) == 0){
-            if(this.getLeft().isEmpty()){
-                this.setLeft(new BinarySearchTree<E>(newValue));
+    public void add(E newValue, BinarySearchTree<E> tree){   
+        if(tree.getValue().compareTo(newValue) > 0 || tree.getValue().compareTo(newValue) == 0){
+            if(tree.getLeft().isEmpty()){
+                tree.setLeft(new BinarySearchTree<E>(newValue));
             }else{
-                this.getLeft().add(newValue);
+                add(newValue, tree.getLeft());
             }
-        }else if(this.getValue().compareTo(newValue) > 0){
-            if(this.getRight().isEmpty()){
-                this.setRight(new BinarySearchTree<E>(newValue));
+        }else if(tree.getValue().compareTo(newValue) < 0){
+            if(tree.getRight().isEmpty()){
+                tree.setRight(new BinarySearchTree<E>(newValue));
             }else{
-                this.getRight().add(newValue);
+                add(newValue, tree.getRight());
             }
         }
     }
@@ -158,6 +158,14 @@ public class BinarySearchTree<E extends Comparable<E>> implements OrderedStructu
      */
     public void setValue(E value){
         val = value;
+    }
+
+    public void inOrder(BinarySearchTree<E> node) {
+        if(!(node.isEmpty())) {
+            inOrder(node.getLeft());   
+            System.out.print(node.getValue().toString() + " ");
+            inOrder(node.getRight());
+        }
     }
     
 }
