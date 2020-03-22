@@ -36,8 +36,14 @@ public class Translator{
         for(int i=0; i<asociaciones.length; i++){
             String[] traduccion = asociaciones[i].replace("(","").replace(")","").split(", ");
             Association<String> as = new Association<String>(traduccion[0], traduccion[1]);
-            this.bst.add(as);
+            if(this.bst.isEmpty()){
+                this.bst.setValue(as);
+                this.bst.add(as, this.bst);
+            }else{
+                this.bst.add(as, this.bst);
+            }
         }
+        this.bst.inOrder(this.bst);
     }
 
     /**
@@ -61,8 +67,8 @@ public class Translator{
         String traduccion = "";
         for(int i=0; i<palabras.length; i++){
             Association<String> asociacion = new Association<String>(palabras[i], null);
-            if(this.bst.contains(asociacion)){
-                traduccion += this.bst.get(asociacion).getEspanol() + " ";
+            if(this.bst.contains(asociacion, this.bst)){
+                traduccion += this.bst.get(asociacion, this.bst).getEspanol() + " ";
             }else{
                 traduccion += "*" + palabras[i] + "* ";
             }
@@ -90,7 +96,6 @@ public class Translator{
             File file = new File(archivo);
             reader = new BufferedReader(new FileReader(file));
             while ((line = reader.readLine()) != null) {
-                System.out.println(line);
                 cad += line+"\n";
             }
         
@@ -103,7 +108,7 @@ public class Translator{
                 e.printStackTrace();
             }
         }
-        return cad.substring(0, cad.length()-2);
+        return cad.substring(0, cad.length()-1);
     }
     
 }
