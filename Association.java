@@ -3,10 +3,10 @@
  * Clase con asociaciones comparables
  */
 
-public class Association implements Comparable<Association>{
+public class Association<E extends Comparable<E>> implements Comparable<Association<E>>{
 
-    private String ingles;
-    private String espanol;
+    private E ingles;
+    private E espanol;
 
     /**
      * Constructor si parametros
@@ -19,7 +19,7 @@ public class Association implements Comparable<Association>{
      * @param ingles
      * @param espanol
      */
-    public Association(String ingles, String espanol){
+    public Association(E ingles, E espanol){
         this.ingles = ingles;
         this.espanol = espanol;
     }
@@ -27,37 +27,37 @@ public class Association implements Comparable<Association>{
     /**
      * @param ingles the ingles to set
      */
-    public void setIngles(String ingles) {
+    public void setIngles(E ingles) {
         this.ingles = ingles;
     }
 
     /**
      * @param espanol the espanol to set
      */
-    public void setEspanol(String espanol) {
+    public void setEspanol(E espanol) {
         this.espanol = espanol;
     }
 
     /**
      * @return the ingles
      */
-    public String getIngles() {
+    public E getIngles() {
         return ingles;
     }
 
     /**
      * @return the espanol
      */
-    public String getEspanol() {
+    public E getEspanol() {
         return espanol;
     }
 
     public String toString() {
-        return "("+this.ingles+", "+this.espanol+")";
+        return "("+this.ingles.toString()+", "+this.espanol.toString()+")";
     }
 
     @Override
-    public int compareTo(Association other) {
+    public int compareTo(Association<E> other) {
         return this.getIngles().compareTo(other.getIngles());
     }
 }
